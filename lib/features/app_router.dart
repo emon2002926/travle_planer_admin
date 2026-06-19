@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 
 import 'admin_shell.dart';
-import 'auth/views/administrators_screen.dart';
+import 'administrator/views/administrators_screen.dart';
 import 'auth/views/check_email_screen.dart';
 import 'auth/views/dashboard_screen.dart';
 import 'auth/views/forget_password_screen.dart';
@@ -12,6 +12,9 @@ import 'auth/views/set_new_password_screen.dart';
 import 'auth/views/settings_screen.dart';
 import 'auth/views/user_management_screen.dart';
 
+
+
+import 'package:get/get.dart';
 
 
 class AppRoutes {
@@ -29,6 +32,8 @@ class AppRoutes {
 }
 
 final GoRouter appRouter = GoRouter(
+  // Share GetX's navigator so Get.dialog / Get.back / Get.snackbar work.
+  navigatorKey: Get.key,
   initialLocation: AppRoutes.login,
 
   // TODO: real auth guard. Uncomment and wire to your auth state:
