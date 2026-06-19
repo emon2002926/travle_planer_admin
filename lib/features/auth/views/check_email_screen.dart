@@ -9,7 +9,7 @@ import '../controllers/check_email_controller.dart';
 
 
 class CheckEmailScreen extends StatelessWidget {
-  CheckEmailScreen({super.key});
+  const CheckEmailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

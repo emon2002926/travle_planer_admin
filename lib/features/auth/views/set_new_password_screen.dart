@@ -8,7 +8,7 @@ import '../../../core/widgets/text/text_field/AppTextFiled.dart';
 import '../controllers/set_new_password_controller.dart';
 
 class SetNewPasswordScreen extends StatelessWidget {
-  SetNewPasswordScreen({super.key});
+  const SetNewPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

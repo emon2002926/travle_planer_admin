@@ -47,6 +47,8 @@ class NewAdministratorDialog extends StatelessWidget {
                       controller: controller.formName,
                       hintText: 'Full name',
                       fillColor: Colors.transparent,
+                      inputTextColor: Color(0xFF101828),
+
                     ),
                   ),
                   _row(
@@ -56,6 +58,7 @@ class NewAdministratorDialog extends StatelessWidget {
                       hintText: 'Email address',
                       keyboardType: TextInputType.emailAddress,
                       fillColor: Colors.transparent,
+                      inputTextColor: Color(0xFF101828),
                     ),
                   ),
                   _row(label: 'Role', input: _roleDropdown(controller)),

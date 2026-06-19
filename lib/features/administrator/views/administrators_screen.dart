@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import '../../../core/widgets/text/app_text.dart';
 import '../controllers/administrators_controller.dart';
 
+
+
 class AdministratorsScreen extends StatelessWidget {
-  AdministratorsScreen({super.key});
+  const AdministratorsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +49,33 @@ class AdministratorsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            _headerRow(),
-            const Divider(height: 1, color: Color(0xFFEAECF0)),
-            Obx(() => Column(
-                  children: [
-                    for (int i = 0; i < controller.admins.length; i++)
-                      _dataRow(controller, i),
-                  ],
-                )),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final tableWidth =
+                constraints.maxWidth > 900 ? constraints.maxWidth : 900.0;
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: SizedBox(
+                    width: tableWidth,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _headerRow(),
+                        const Divider(height: 1, color: Color(0xFFEAECF0)),
+                        Obx(() => Column(
+                          children: [
+                            for (int i = 0;
+                            i < controller.admins.length;
+                            i++)
+                              _dataRow(controller, i),
+                          ],
+                        )),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -92,14 +113,14 @@ class AdministratorsScreen extends StatelessWidget {
   Widget _dataRow(AdministratorsController c, int i) {
     final a = c.admins[i];
     Widget cell(String t, int flex) => Expanded(
-          flex: flex,
-          child: AppText(
-            data: t,
-            fontSize: 15,
-            fontWeight: FontWeight.w400,
-            color: Color(0xFF344054),
-          ),
-        );
+      flex: flex,
+      child: AppText(
+        data: t,
+        fontSize: 15,
+        fontWeight: FontWeight.w400,
+        color: Color(0xFF344054),
+      ),
+    );
 
     Widget actionBtn(IconData icon, Color color, VoidCallback onTap) {
       return InkWell(
@@ -134,10 +155,10 @@ class AdministratorsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 actionBtn(Icons.edit_outlined, Color(0xFF1A56DB),
-                    () => c.onEdit(i)),
+                        () => c.onEdit(i)),
                 const SizedBox(width: 12),
                 actionBtn(Icons.delete_outline, Color(0xFFEF4444),
-                    () => c.deleteAdmin(i)),
+                        () => c.confirmRemove(i)),
               ],
             ),
           ),

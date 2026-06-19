@@ -4,9 +4,7 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'core/util/app_navigation.dart';
 import 'features/app_router.dart';
-import 'features/auth/views/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

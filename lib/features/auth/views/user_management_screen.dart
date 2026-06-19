@@ -6,7 +6,7 @@ import '../controllers/user_management_controller.dart';
 
 
 class UserManagementScreen extends StatelessWidget {
-  UserManagementScreen({super.key});
+  const UserManagementScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,43 +24,45 @@ class UserManagementScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Role tabs
-            Obx(() => Row(
-                  children: controller.roles.map((role) {
-                    final isSelected = controller.selectedRole.value == role;
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 12),
-                      child: InkWell(
-                        onTap: () => controller.selectRole(role),
-                        borderRadius: BorderRadius.circular(8),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 28, vertical: 12),
-                          decoration: BoxDecoration(
-                            color: isSelected
-                                ? Color(0xFF1A56DB)
-                                : Color(0xFFFFFFFF),
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Color(0xFF1A56DB)),
-                          ),
-                          child: AppText(
-                            data: role,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: isSelected
-                                ? Color(0xFFFFFFFF)
-                                : Color(0xFF1A56DB),
-                          ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Obx(() => Row(
+                children: controller.roles.map((role) {
+                  final isSelected = controller.selectedRole.value == role;
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: InkWell(
+                      onTap: () => controller.selectRole(role),
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 28, vertical: 12),
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? Color(0xFF1A56DB)
+                              : Color(0xFFFFFFFF),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Color(0xFF1A56DB)),
+                        ),
+                        child: AppText(
+                          data: role,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: isSelected
+                              ? Color(0xFFFFFFFF)
+                              : Color(0xFF1A56DB),
                         ),
                       ),
-                    );
-                  }).toList(),
-                )),
+                    ),
+                  );
+                }).toList(),
+              )),
+            ),
             const SizedBox(height: 20),
             // Search bar
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Color(0xFFEDEFF2),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
@@ -69,6 +71,8 @@ class UserManagementScreen extends StatelessWidget {
                     child: AppTextField(
                       controller: controller.searchController,
                       hintText: 'Search by email or name',
+                      fillColor: Colors.transparent,
+                      inputTextColor: Color(0xFF101828),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -94,15 +98,36 @@ class UserManagementScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            _headerRow(),
-            const Divider(height: 1, color: Color(0xFFEAECF0)),
-            Obx(() => Column(
-                  children: controller.users
-                      .map((u) => _dataRow(controller, u))
-                      .toList(),
-                )),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final tableWidth = constraints.maxWidth > 1000
+                    ? constraints.maxWidth
+                    : 1000.0;
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: SizedBox(
+                    width: tableWidth,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _headerRow(),
+                        const Divider(height: 1, color: Color(0xFFEAECF0)),
+                        Obx(() => Column(
+                          children: controller.users
+                              .map((u) => _dataRow(controller, u))
+                              .toList(),
+                        )),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
             const SizedBox(height: 20),
-            Obx(() => _pagination(controller)),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Obx(() => _pagination(controller)),
+            ),
           ],
         ),
       ),
@@ -111,14 +136,14 @@ class UserManagementScreen extends StatelessWidget {
 
   Widget _headerRow() {
     Widget h(String t, int flex) => Expanded(
-          flex: flex,
-          child: AppText(
-            data: t,
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF101828),
-          ),
-        );
+      flex: flex,
+      child: AppText(
+        data: t,
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+        color: Color(0xFF101828),
+      ),
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 14),
       child: Row(
@@ -136,14 +161,14 @@ class UserManagementScreen extends StatelessWidget {
 
   Widget _dataRow(UserManagementController c, UserRow u) {
     Widget cell(String t, int flex) => Expanded(
-          flex: flex,
-          child: AppText(
-            data: t,
-            fontSize: 15,
-            fontWeight: FontWeight.w400,
-            color: Color(0xFF344054),
-          ),
-        );
+      flex: flex,
+      child: AppText(
+        data: t,
+        fontSize: 15,
+        fontWeight: FontWeight.w400,
+        color: Color(0xFF344054),
+      ),
+    );
     return Container(
       decoration: BoxDecoration(
         border: Border(bottom: BorderSide(color: Color(0xFFF2F4F7))),
@@ -195,7 +220,7 @@ class UserManagementScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           child: Container(
             padding:
-                const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+            const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
             decoration: BoxDecoration(
               color: filled ? Color(0xFF1A56DB) : Color(0xFFFFFFFF),
               borderRadius: BorderRadius.circular(8),

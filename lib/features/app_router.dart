@@ -49,17 +49,17 @@ final GoRouter appRouter = GoRouter(
   // },
 
   routes: [
-    GoRoute(path: AppRoutes.login, builder: (_, __) => LoginScreen()),
+    GoRoute(path: AppRoutes.login, builder: (_, _) => LoginScreen()),
     GoRoute(
         path: AppRoutes.forgotPassword,
-        builder: (_, __) => ForgetPasswordScreen()),
-    GoRoute(path: AppRoutes.verify, builder: (_, __) => CheckEmailScreen()),
+        builder: (_, _) => ForgetPasswordScreen()),
+    GoRoute(path: AppRoutes.verify, builder: (_, _) => CheckEmailScreen()),
     GoRoute(
         path: AppRoutes.resetPassword,
-        builder: (_, __) => SetNewPasswordScreen()),
+        builder: (_, _) => SetNewPasswordScreen()),
     GoRoute(
         path: AppRoutes.resetSuccess,
-        builder: (_, __) => const PasswordUpdatedScreen()),
+        builder: (_, _) => const PasswordUpdatedScreen()),
 
     // Persistent shell: sidebar stays, each branch is its own URL + state.
     StatefulShellRoute.indexedStack(
@@ -68,25 +68,25 @@ final GoRouter appRouter = GoRouter(
       branches: [
         StatefulShellBranch(routes: [
           GoRoute(
-              path: AppRoutes.dashboard, builder: (_, __) => DashboardScreen()),
+              path: AppRoutes.dashboard, builder: (_, _) => DashboardScreen()),
         ]),
         StatefulShellBranch(routes: [
           GoRoute(
               path: AppRoutes.users,
-              builder: (_, __) => UserManagementScreen()),
+              builder: (_, _) => UserManagementScreen()),
         ]),
         StatefulShellBranch(routes: [
           GoRoute(
-              path: AppRoutes.payment, builder: (_, __) => PaymentScreen()),
+              path: AppRoutes.payment, builder: (_, _) => PaymentScreen()),
         ]),
         StatefulShellBranch(routes: [
           GoRoute(
               path: AppRoutes.administrators,
-              builder: (_, __) => AdministratorsScreen()),
+              builder: (_, _) => AdministratorsScreen()),
         ]),
         StatefulShellBranch(routes: [
           GoRoute(
-              path: AppRoutes.settings, builder: (_, __) => SettingsScreen()),
+              path: AppRoutes.settings, builder: (_, _) => SettingsScreen()),
         ]),
       ],
     ),

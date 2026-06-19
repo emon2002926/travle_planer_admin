@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import '../../../core/widgets/text/app_text.dart';
 import '../controllers/payment_controller.dart';
 
+
+
 class PaymentScreen extends StatelessWidget {
-  PaymentScreen({super.key});
+  const PaymentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,29 +33,48 @@ class PaymentScreen extends StatelessWidget {
                   border: Border.all(color: Color(0xFFD0D5DD)),
                 ),
                 child: Obx(() => DropdownButton<String>(
-                      value: controller.sortBy.value,
-                      underline: const SizedBox(),
-                      icon: Icon(Icons.keyboard_arrow_down,
-                          color: Color(0xFF101828)),
-                      items: controller.sortOptions
-                          .map((o) => DropdownMenuItem(
-                                value: o,
-                                child: Text(o),
-                              ))
-                          .toList(),
-                      onChanged: (v) {
-                        if (v != null) controller.setSort(v);
-                      },
-                    )),
+                  value: controller.sortBy.value,
+                  underline: const SizedBox(),
+                  icon: Icon(Icons.keyboard_arrow_down,
+                      color: Color(0xFF101828)),
+                  items: controller.sortOptions
+                      .map((o) => DropdownMenuItem(
+                    value: o,
+                    child: Text(o),
+                  ))
+                      .toList(),
+                  onChanged: (v) {
+                    if (v != null) controller.setSort(v);
+                  },
+                )),
               ),
             ),
             const SizedBox(height: 16),
-            _headerRow(),
-            const Divider(height: 1, color: Color(0xFFEAECF0)),
-            Obx(() => Column(
-                  children:
-                      controller.payments.map((p) => _dataRow(p)).toList(),
-                )),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final tableWidth = constraints.maxWidth > 1000
+                    ? constraints.maxWidth
+                    : 1000.0;
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: SizedBox(
+                    width: tableWidth,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _headerRow(),
+                        const Divider(height: 1, color: Color(0xFFEAECF0)),
+                        Obx(() => Column(
+                          children: controller.payments
+                              .map((p) => _dataRow(p))
+                              .toList(),
+                        )),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
             const SizedBox(height: 24),
             Center(
               child: InkWell(
@@ -91,14 +112,14 @@ class PaymentScreen extends StatelessWidget {
 
   Widget _headerRow() {
     Widget h(String t, int flex) => Expanded(
-          flex: flex,
-          child: AppText(
-            data: t,
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF101828),
-          ),
-        );
+      flex: flex,
+      child: AppText(
+        data: t,
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+        color: Color(0xFF101828),
+      ),
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 14),
       child: Row(
@@ -116,14 +137,14 @@ class PaymentScreen extends StatelessWidget {
 
   Widget _dataRow(PaymentRow p) {
     Widget cell(String t, int flex) => Expanded(
-          flex: flex,
-          child: AppText(
-            data: t,
-            fontSize: 15,
-            fontWeight: FontWeight.w400,
-            color: Color(0xFF344054),
-          ),
-        );
+      flex: flex,
+      child: AppText(
+        data: t,
+        fontSize: 15,
+        fontWeight: FontWeight.w400,
+        color: Color(0xFF344054),
+      ),
+    );
 
     final bool failed = p.status == 'Failed';
     final Color badgeBg = failed ? Color(0xFFFEE2E2) : Color(0xFFDCFCE7);
@@ -146,7 +167,7 @@ class PaymentScreen extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 18, vertical: 7),
+                const EdgeInsets.symmetric(horizontal: 18, vertical: 7),
                 decoration: BoxDecoration(
                   color: badgeBg,
                   borderRadius: BorderRadius.circular(6),

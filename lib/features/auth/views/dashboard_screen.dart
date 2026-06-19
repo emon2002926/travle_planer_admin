@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import '../../../core/widgets/text/app_text.dart';
 import '../controllers/dashboard_controller.dart';
 
+
 class DashboardScreen extends StatelessWidget {
-  DashboardScreen({super.key});
+  const DashboardScreen({super.key});
 
   static const List<IconData> _icons = [
     Icons.check_circle,
@@ -64,21 +65,36 @@ class DashboardScreen extends StatelessWidget {
                     color: Color(0xFF101828),
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      for (int i = 0; i < controller.stats.length; i++) ...[
-                        Expanded(
-                          child: _StatCard(
-                            icon: _icons[i],
-                            iconColor: _iconColors[i],
-                            value: controller.stats[i].value,
-                            label: controller.stats[i].label,
-                          ),
-                        ),
-                        if (i != controller.stats.length - 1)
-                          const SizedBox(width: 16),
-                      ],
-                    ],
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final w = constraints.maxWidth;
+                      final perRow = w >= 1100
+                          ? 5
+                          : w >= 800
+                          ? 3
+                          : w >= 500
+                          ? 2
+                          : 1;
+                      const spacing = 16.0;
+                      final cardW =
+                          (w - spacing * (perRow - 1)) / perRow;
+                      return Wrap(
+                        spacing: spacing,
+                        runSpacing: spacing,
+                        children: [
+                          for (int i = 0; i < controller.stats.length; i++)
+                            SizedBox(
+                              width: cardW,
+                              child: _StatCard(
+                                icon: _icons[i],
+                                iconColor: _iconColors[i],
+                                value: controller.stats[i].value,
+                                label: controller.stats[i].label,
+                              ),
+                            ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),

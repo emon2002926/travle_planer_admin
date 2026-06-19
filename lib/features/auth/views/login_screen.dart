@@ -14,7 +14,7 @@ const Color _kTextPrimary = Color(0xFF101828);
 const Color _kTextSecondary = Color(0xFF475467);
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
