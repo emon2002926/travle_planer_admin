@@ -11,6 +11,7 @@ class AdminShell extends StatelessWidget {
       backgroundColor: Color(0xFFEEF2F7),
       body: Row(
         children: [
+
           _Sidebar(navigationShell: navigationShell),
           Expanded(
             child: Column(
