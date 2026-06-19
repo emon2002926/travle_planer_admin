@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../core/util/app_navigation.dart';
-import '../views/set_new_password_screen.dart';
+import '../../app_router.dart';
 
 class CheckEmailController extends GetxController {
   final List<TextEditingController> otpControllers =
@@ -23,7 +21,7 @@ class CheckEmailController extends GetxController {
   void onVerify() {
     if (code.length < 5) return;
     // TODO: verify the code with your API, then:
-    AppNavigation.push(SetNewPasswordScreen());
+    appRouter.go(AppRoutes.resetPassword);
   }
 
   void onResend() {

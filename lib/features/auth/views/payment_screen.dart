@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/widgets/text/app_text.dart';
-import '../controllers/admin_shell.dart';
 import '../controllers/payment_controller.dart';
-
 
 class PaymentScreen extends StatelessWidget {
   PaymentScreen({super.key});
@@ -12,84 +10,80 @@ class PaymentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(PaymentController());
 
-    return AdminShell(
-      selected: AdminNav.payment,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(28),
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            color: Color(0xFFFFFFFF),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Sort dropdown
-              Align(
-                alignment: Alignment.centerRight,
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(28),
+      child: Container(
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Color(0xFFFFFFFF),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Color(0xFFFFFFFF),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Color(0xFFD0D5DD)),
+                ),
+                child: Obx(() => DropdownButton<String>(
+                      value: controller.sortBy.value,
+                      underline: const SizedBox(),
+                      icon: Icon(Icons.keyboard_arrow_down,
+                          color: Color(0xFF101828)),
+                      items: controller.sortOptions
+                          .map((o) => DropdownMenuItem(
+                                value: o,
+                                child: Text(o),
+                              ))
+                          .toList(),
+                      onChanged: (v) {
+                        if (v != null) controller.setSort(v);
+                      },
+                    )),
+              ),
+            ),
+            const SizedBox(height: 16),
+            _headerRow(),
+            const Divider(height: 1, color: Color(0xFFEAECF0)),
+            Obx(() => Column(
+                  children:
+                      controller.payments.map((p) => _dataRow(p)).toList(),
+                )),
+            const SizedBox(height: 24),
+            Center(
+              child: InkWell(
+                onTap: controller.onExportCsv,
+                borderRadius: BorderRadius.circular(8),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 40, vertical: 16),
                   decoration: BoxDecoration(
-                    color: Color(0xFFFFFFFF),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Color(0xFFD0D5DD)),
+                    color: Color(0xFF1A56DB),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Obx(() => DropdownButton<String>(
-                        value: controller.sortBy.value,
-                        underline: const SizedBox(),
-                        icon: Icon(Icons.keyboard_arrow_down,
-                            color: Color(0xFF101828)),
-                        items: controller.sortOptions
-                            .map((o) => DropdownMenuItem(
-                                  value: o,
-                                  child: Text(o),
-                                ))
-                            .toList(),
-                        onChanged: (v) {
-                          if (v != null) controller.setSort(v);
-                        },
-                      )),
-                ),
-              ),
-              const SizedBox(height: 16),
-              _headerRow(),
-              const Divider(height: 1, color: Color(0xFFEAECF0)),
-              Obx(() => Column(
-                    children:
-                        controller.payments.map((p) => _dataRow(p)).toList(),
-                  )),
-              const SizedBox(height: 24),
-              Center(
-                child: InkWell(
-                  onTap: controller.onExportCsv,
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 40, vertical: 16),
-                    decoration: BoxDecoration(
-                      color: Color(0xFF1A56DB),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.file_download_outlined,
-                            color: Color(0xFFFFFFFF), size: 20),
-                        const SizedBox(width: 10),
-                        AppText(
-                          data: 'Export CSV',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFFFFFFFF),
-                        ),
-                      ],
-                    ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.file_download_outlined,
+                          color: Color(0xFFFFFFFF), size: 20),
+                      const SizedBox(width: 10),
+                      AppText(
+                        data: 'Export CSV',
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFFFFFFFF),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

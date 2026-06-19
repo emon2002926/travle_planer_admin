@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-
-import '../../../core/util/app_navigation.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/util/screen_size.dart';
+
 import '../../../core/widgets/buttons/app_button.dart';
 import '../../../core/widgets/text/app_text.dart';
-import 'login_screen.dart';
+import '../../app_router.dart';
 
 class PasswordUpdatedScreen extends StatelessWidget {
   const PasswordUpdatedScreen({super.key});
@@ -46,7 +46,7 @@ class PasswordUpdatedScreen extends StatelessWidget {
                   SizedBox(height: context.h(32)),
                   AppButton(
                     buttonText: 'Sign in',
-                    onPressed: () => AppNavigation.push(LoginScreen()),
+                    onPressed: () => context.go(AppRoutes.login),
                     buttonHeight: context.h(54),
                   ),
                   SizedBox(height: context.h(40)),

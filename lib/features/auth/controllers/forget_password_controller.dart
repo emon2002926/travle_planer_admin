@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/util/app_navigation.dart';
-import '../views/check_email_screen.dart';
+import '../../app_router.dart';
 
 class ForgetPasswordController extends GetxController {
   final TextEditingController emailController = TextEditingController();
@@ -9,7 +8,7 @@ class ForgetPasswordController extends GetxController {
   void onContinue() {
     if (emailController.text.trim().isEmpty) return;
     // TODO: call your "send verification code" API, then:
-    AppNavigation.push(CheckEmailScreen());
+    appRouter.go(AppRoutes.verify);
   }
 
   @override

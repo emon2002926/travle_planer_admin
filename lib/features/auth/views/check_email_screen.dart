@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../core/util/screen_size.dart';
 import '../../../core/widgets/buttons/app_button.dart';
 import '../../../core/widgets/text/app_text.dart';
 import '../../../core/widgets/text/text_field/AppTextFiled.dart';
-
 import '../controllers/check_email_controller.dart';
+
 
 class CheckEmailScreen extends StatelessWidget {
   CheckEmailScreen({super.key});
@@ -26,7 +27,7 @@ class CheckEmailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(height: context.h(40)),
-                  // Center(child: AuthTripNestWordmark()),
+                  // const Center(child: AuthTripNestWordmark()),
                   SizedBox(height: context.h(40)),
                   Center(
                     child: AppText(

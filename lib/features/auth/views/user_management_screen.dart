@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/widgets/text/app_text.dart';
 import '../../../core/widgets/text/text_field/AppTextFiled.dart';
-import '../controllers/admin_shell.dart';
 import '../controllers/user_management_controller.dart';
 
 
@@ -13,104 +12,98 @@ class UserManagementScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(UserManagementController());
 
-    return AdminShell(
-      selected: AdminNav.userManagement,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(28),
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            color: Color(0xFFFFFFFF),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Role tabs
-              Obx(() => Row(
-                    children: controller.roles.map((role) {
-                      final isSelected = controller.selectedRole.value == role;
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 12),
-                        child: InkWell(
-                          onTap: () => controller.selectRole(role),
-                          borderRadius: BorderRadius.circular(8),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 28, vertical: 12),
-                            decoration: BoxDecoration(
-                              color: isSelected
-                                  ? Color(0xFF1A56DB)
-                                  : Color(0xFFFFFFFF),
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Color(0xFF1A56DB)),
-                            ),
-                            child: AppText(
-                              data: role,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: isSelected
-                                  ? Color(0xFFFFFFFF)
-                                  : Color(0xFF1A56DB),
-                            ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(28),
+      child: Container(
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Color(0xFFFFFFFF),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Role tabs
+            Obx(() => Row(
+                  children: controller.roles.map((role) {
+                    final isSelected = controller.selectedRole.value == role;
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 12),
+                      child: InkWell(
+                        onTap: () => controller.selectRole(role),
+                        borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 28, vertical: 12),
+                          decoration: BoxDecoration(
+                            color: isSelected
+                                ? Color(0xFF1A56DB)
+                                : Color(0xFFFFFFFF),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Color(0xFF1A56DB)),
+                          ),
+                          child: AppText(
+                            data: role,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: isSelected
+                                ? Color(0xFFFFFFFF)
+                                : Color(0xFF1A56DB),
                           ),
                         ),
-                      );
-                    }).toList(),
-                  )),
-              const SizedBox(height: 20),
-              // Search bar
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Color(0xFFEDEFF2),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: AppTextField(
-                        controller: controller.searchController,
-                        hintText: 'Search by email or name',
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    InkWell(
-                      onTap: controller.onSearch,
-                      borderRadius: BorderRadius.circular(8),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 28, vertical: 14),
-                        decoration: BoxDecoration(
-                          color: Color(0xFF1A56DB),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: AppText(
-                          data: 'Search',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFFFFFFFF),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                    );
+                  }).toList(),
+                )),
+            const SizedBox(height: 20),
+            // Search bar
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Color(0xFFEDEFF2),
+                borderRadius: BorderRadius.circular(10),
               ),
-              const SizedBox(height: 16),
-              // Header
-              _headerRow(),
-              const Divider(height: 1, color: Color(0xFFEAECF0)),
-              // Rows
-              Obx(() => Column(
-                    children: controller.users
-                        .map((u) => _dataRow(controller, u))
-                        .toList(),
-                  )),
-              const SizedBox(height: 20),
-              // Pagination
-              Obx(() => _pagination(controller)),
-            ],
-          ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: AppTextField(
+                      controller: controller.searchController,
+                      hintText: 'Search by email or name',
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  InkWell(
+                    onTap: controller.onSearch,
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 28, vertical: 14),
+                      decoration: BoxDecoration(
+                        color: Color(0xFF1A56DB),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: AppText(
+                        data: 'Search',
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFFFFFFFF),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            _headerRow(),
+            const Divider(height: 1, color: Color(0xFFEAECF0)),
+            Obx(() => Column(
+                  children: controller.users
+                      .map((u) => _dataRow(controller, u))
+                      .toList(),
+                )),
+            const SizedBox(height: 20),
+            Obx(() => _pagination(controller)),
+          ],
         ),
       ),
     );

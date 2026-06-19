@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/widgets/text/app_text.dart';
-import '../controllers/admin_shell.dart';
 import '../controllers/dashboard_controller.dart';
-
 
 class DashboardScreen extends StatelessWidget {
   DashboardScreen({super.key});
@@ -28,69 +26,66 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(DashboardController());
 
-    return AdminShell(
-      selected: AdminNav.dashboard,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(28),
-        child: Obx(() {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppText(
-                      data: 'Hi, Good Morning',
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF667085),
-                    ),
-                    const SizedBox(height: 6),
-                    AppText(
-                      data: controller.adminName.value,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF101828),
-                    ),
-                  ],
-                ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(28),
+      child: Obx(() {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppText(
+                    data: 'Hi, Good Morning',
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF667085),
+                  ),
+                  const SizedBox(height: 6),
+                  AppText(
+                    data: controller.adminName.value,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF101828),
+                  ),
+                ],
               ),
-              const SizedBox(height: 20),
-              _card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppText(
-                      data: "User's Overview",
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF101828),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        for (int i = 0; i < controller.stats.length; i++) ...[
-                          Expanded(
-                            child: _StatCard(
-                              icon: _icons[i],
-                              iconColor: _iconColors[i],
-                              value: controller.stats[i].value,
-                              label: controller.stats[i].label,
-                            ),
+            ),
+            const SizedBox(height: 20),
+            _card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppText(
+                    data: "User's Overview",
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF101828),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      for (int i = 0; i < controller.stats.length; i++) ...[
+                        Expanded(
+                          child: _StatCard(
+                            icon: _icons[i],
+                            iconColor: _iconColors[i],
+                            value: controller.stats[i].value,
+                            label: controller.stats[i].label,
                           ),
-                          if (i != controller.stats.length - 1)
-                            const SizedBox(width: 16),
-                        ],
+                        ),
+                        if (i != controller.stats.length - 1)
+                          const SizedBox(width: 16),
                       ],
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          );
-        }),
-      ),
+            ),
+          ],
+        );
+      }),
     );
   }
 

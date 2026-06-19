@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/util/app_navigation.dart';
-import '../views/password_updated_screen.dart';
+import '../../app_router.dart';
 
 class SetNewPasswordController extends GetxController {
   final TextEditingController newPasswordController = TextEditingController();
@@ -23,7 +22,7 @@ class SetNewPasswordController extends GetxController {
       return;
     }
     // TODO: send the new password to your API, then:
-    AppNavigation.push(PasswordUpdatedScreen());
+    appRouter.go(AppRoutes.resetSuccess);
   }
 
   @override

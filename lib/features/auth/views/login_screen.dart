@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/constants/app_colors.dart';
+
 import '../../../core/util/screen_size.dart';
 import '../../../core/widgets/buttons/app_button.dart';
 import '../../../core/widgets/text/app_text.dart';
-
 import '../../../core/widgets/text/text_field/AppTextFiled.dart';
 import '../controllers/login_controller.dart';
+
+
+const Color _kBackground = Color(0xFFFFFFFF);
+const Color _kPrimary = Color(0xFF1A56DB);
+const Color _kTextPrimary = Color(0xFF101828);
+const Color _kTextSecondary = Color(0xFF475467);
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -17,7 +22,7 @@ class LoginScreen extends StatelessWidget {
 
     return Obx(() {
       return Scaffold(
-        backgroundColor:Color(0xFFFFFFFF),
+        backgroundColor: _kBackground,
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -36,7 +41,7 @@ class LoginScreen extends StatelessWidget {
                         data: 'Login to Account',
                         fontSize: 28,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF101828),
+                        color: _kTextPrimary,
                       ),
                     ),
                     SizedBox(height: context.h(12)),
@@ -45,16 +50,17 @@ class LoginScreen extends StatelessWidget {
                         data: 'Please enter your email and password to continue',
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: Color(0xFF475467),
+                        color: _kTextSecondary,
                       ),
                     ),
                     SizedBox(height: context.h(40)),
 
+                    // -- Email --------------------------------
                     AppText(
                       data: 'Email address',
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xFF101828),
+                      color: _kTextPrimary,
                     ),
                     SizedBox(height: context.h(8)),
                     AppTextField(
@@ -64,11 +70,12 @@ class LoginScreen extends StatelessWidget {
                     ),
                     SizedBox(height: context.h(24)),
 
+                    // -- Password -----------------------------
                     AppText(
                       data: 'Password',
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xFF101828),
+                      color: _kTextPrimary,
                     ),
                     SizedBox(height: context.h(8)),
                     AppTextField(
@@ -81,12 +88,13 @@ class LoginScreen extends StatelessWidget {
                           controller.obscurePassword.value
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined,
-                          color: Color(0xFF475467),
+                          color: _kTextSecondary,
                         ),
                       ),
                     ),
                     SizedBox(height: context.h(16)),
 
+                    // -- Remember + Forget --------------------
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -99,12 +107,12 @@ class LoginScreen extends StatelessWidget {
                                 value: controller.rememberPassword.value,
                                 onChanged: (_) =>
                                     controller.toggleRememberPassword(),
-                                activeColor: Color(0xFF1A56DB),
+                                activeColor: _kPrimary,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                                 materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
+                                    MaterialTapTargetSize.shrinkWrap,
                                 visualDensity: VisualDensity.compact,
                               ),
                             ),
@@ -113,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                               data: 'Remember Password',
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: Color(0xFF101828),
+                              color: _kTextPrimary,
                             ),
                           ],
                         ),
@@ -123,7 +131,7 @@ class LoginScreen extends StatelessWidget {
                             data: 'Forget Password?',
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFF1A56DB),
+                            color: _kPrimary,
                           ),
                         ),
                       ],

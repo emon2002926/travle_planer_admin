@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../core/util/app_navigation.dart';
-import '../views/administrators_screen.dart';
-import '../views/dashboard_screen.dart';
-import '../views/payment_screen.dart';
-import '../views/settings_screen.dart';
-import '../views/user_management_screen.dart';
-
-
-enum AdminNav { dashboard, userManagement, payment, administrators, settings }
+import 'package:go_router/go_router.dart';
 
 class AdminShell extends StatelessWidget {
-  final AdminNav selected;
-  final Widget body;
-  const AdminShell({super.key, required this.selected, required this.body});
+  final StatefulNavigationShell navigationShell;
+  const AdminShell({super.key, required this.navigationShell});
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +11,12 @@ class AdminShell extends StatelessWidget {
       backgroundColor: Color(0xFFEEF2F7),
       body: Row(
         children: [
-          _Sidebar(selected: selected),
+          _Sidebar(navigationShell: navigationShell),
           Expanded(
             child: Column(
               children: [
                 const _TopBar(),
-                Expanded(child: body),
+                Expanded(child: navigationShell),
               ],
             ),
           ),
@@ -36,32 +27,19 @@ class AdminShell extends StatelessWidget {
 }
 
 class _Sidebar extends StatelessWidget {
-  final AdminNav selected;
-  const _Sidebar({required this.selected});
+  final StatefulNavigationShell navigationShell;
+  const _Sidebar({required this.navigationShell});
 
-  void _go(AdminNav target) {
-    if (target == selected) return;
-    switch (target) {
-      case AdminNav.dashboard:
-        AppNavigation.push(DashboardScreen());
-        break;
-      case AdminNav.userManagement:
-        AppNavigation.push(UserManagementScreen());
-        break;
-      case AdminNav.payment:
-        AppNavigation.push(PaymentScreen());
-        break;
-      case AdminNav.administrators:
-        AppNavigation.push(AdministratorsScreen());
-        break;
-      case AdminNav.settings:
-        AppNavigation.push(SettingsScreen());
-        break;
-    }
+  void _go(int index) {
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final current = navigationShell.currentIndex;
     return Container(
       width: 280,
       color: Color(0xFF1C1C24),
@@ -97,32 +75,32 @@ class _Sidebar extends StatelessWidget {
           _SidebarItem(
             icon: Icons.speed_outlined,
             label: 'DashBoard',
-            isSelected: selected == AdminNav.dashboard,
-            onTap: () => _go(AdminNav.dashboard),
+            isSelected: current == 0,
+            onTap: () => _go(0),
           ),
           _SidebarItem(
             icon: Icons.groups_2_outlined,
             label: 'User Management',
-            isSelected: selected == AdminNav.userManagement,
-            onTap: () => _go(AdminNav.userManagement),
+            isSelected: current == 1,
+            onTap: () => _go(1),
           ),
           _SidebarItem(
             icon: Icons.account_balance_wallet_outlined,
             label: 'Payment',
-            isSelected: selected == AdminNav.payment,
-            onTap: () => _go(AdminNav.payment),
+            isSelected: current == 2,
+            onTap: () => _go(2),
           ),
           _SidebarItem(
             icon: Icons.shield_outlined,
             label: 'Administrators',
-            isSelected: selected == AdminNav.administrators,
-            onTap: () => _go(AdminNav.administrators),
+            isSelected: current == 3,
+            onTap: () => _go(3),
           ),
           _SidebarItem(
             icon: Icons.settings_outlined,
             label: 'Settings',
-            isSelected: selected == AdminNav.settings,
-            onTap: () => _go(AdminNav.settings),
+            isSelected: current == 4,
+            onTap: () => _go(4),
           ),
         ],
       ),
